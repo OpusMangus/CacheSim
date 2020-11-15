@@ -21,4 +21,8 @@ public class cache {
     public void setSets(ArrayList<set> sets) {
         this.sets = sets;
     }
+
+    public set getSet(String id){
+        return sets.get(Integer.parseInt(id, 2));
+    }
 }
