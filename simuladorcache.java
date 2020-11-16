@@ -1,5 +1,4 @@
 import java.io.File;
-import java.util.ArrayList;
 
 public class simuladorcache {
     public static void main(String[] args) {
@@ -9,14 +8,14 @@ public class simuladorcache {
         // '0'));
 
         int dirSize = 32;
-        
+
         int bs = 8;
         int cs = 16;
-        boolean wt = true;
-        boolean fa = false;
+        boolean wt = false;
+        boolean fa = true;
         int sa = 8;
-        boolean wna  = true;
-        boolean split = false;
+        boolean wna = false;
+        boolean split = true;
         File file = new File("cc.trace");
 
         int nSets = cs;
@@ -24,23 +23,20 @@ public class simuladorcache {
             nSets = 1;
         else
             nSets = sa;
-        
-        int setSize = cs/nSets;
+
+        int setSize = cs / nSets;
 
         int offSetSize = logTwo.log2(bs) + 2;
         int idSetSize = logTwo.log2(nSets);
         int tagSize = dirSize - offSetSize - idSetSize;
 
-        ArrayList<instruccion> instArr = null;
+        logicSim simulador = new logicSim(nSets, setSize, tagSize, idSetSize, bs, wt, wna, split);
+
         try {
-            instArr = traceParser.parseFile(file, tagSize, idSetSize);
+            simulador.runSim(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        logicSim simulador = new logicSim(nSets, setSize, idSetSize, bs, wt, wna, split);
-
-        simulador.runSim(instArr);
 
         System.out.println("1. instref  :" + simulador.getInstRefCount());
         System.out.println("2. dataref  :" + simulador.getDataRefCount());
