@@ -32,4 +32,9 @@ public class linea {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+    @Override
+    public String toString(){
+        return tag + " " + dirty + " " + LRUcount; 
+    }
 }

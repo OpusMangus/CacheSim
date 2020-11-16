@@ -7,10 +7,15 @@ public class cache {
         this.sets = new ArrayList<set>();
 
         String ids;
-        for (int i = 0; i < nSets; i++) {
-            ids = Integer.toBinaryString(i);
-            ids = String.format("%" + idSetSize + "s", ids).replace(' ', '0');
-            this.sets.add(new set(ids, setSize));
+        if(idSetSize == 0){
+            this.sets.add(new set(null, setSize));
+        }
+        else{
+            for (int i = 0; i < nSets; i++) {
+                ids = Integer.toBinaryString(i);
+                ids = String.format("%" + idSetSize + "s", ids).replace(' ', '0');
+                this.sets.add(new set(ids, setSize));
+            }
         }
     }
 
@@ -23,6 +28,9 @@ public class cache {
     }
 
     public set getSet(String id){
-        return sets.get(Integer.parseInt(id, 2));
+        if(!id.equals(""))
+            return sets.get(Integer.parseInt(id, 2));
+        else
+            return sets.get(0);
     }
 }
